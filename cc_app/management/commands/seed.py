@@ -45,6 +45,7 @@ def add_comics_to_db():
     # Where you will add fields from the json response to save to the db model fields.
     comic = Comic(
       title=i["title"],
+      description=i["description"],
     )
     comic.save()
 

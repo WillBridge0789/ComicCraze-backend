@@ -10,3 +10,7 @@ class CustomUser(AbstractUser):
 
 class Comic(models.Model):
     title = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000, null=False)
+
+# class FavoritesList(models.Model):
+#     comic = ManyToMany
