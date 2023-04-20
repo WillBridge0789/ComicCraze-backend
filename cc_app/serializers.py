@@ -1,6 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import CustomUser
+from .models import Comic
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -23,3 +24,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class ComicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comic
+        fields = '__all__'

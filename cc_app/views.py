@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from rest_framework import viewsets
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import status, permissions, generics
+from rest_framework import status, permissions, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 from .models import CustomUser
+from .models import Comic
+from .serializers import ComicSerializer
 from .serializers import CustomUserSerializer
 from django.http import JsonResponse
 import requests
@@ -32,6 +33,10 @@ class UserDetail(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+
+class ComicViewSet(viewsets.ModelViewSet):
+    queryset = Comic.objects.all()
+    serializer_class = ComicSerializer
 
 
 

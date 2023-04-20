@@ -5,11 +5,11 @@ from rest_framework import routers
 from .views import *
 
 router = routers.DefaultRouter()
+router.register(r'comics', ComicViewSet)
 
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('comic/', get_comic, name='comic'),
     path('user/signup/', UserCreate.as_view(), name="create_user"),
     path('users/<int:pk>/', UserDetail.as_view(), name="get_user_details"),
     path('user/login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),

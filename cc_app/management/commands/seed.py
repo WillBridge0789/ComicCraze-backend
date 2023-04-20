@@ -29,7 +29,7 @@ def get_comic():
     'apikey': pub_key,
     'hash': hash_params(),
     'limit': 100,
-    'offset': 40000
+    'offset': 40000,
   }
 
   res = requests.get(
@@ -43,9 +43,13 @@ def get_comic():
 def add_comics_to_db():
   for i in get_comic():
     # Where you will add fields from the json response to save to the db model fields.
+    thumbnail_path = i["thumbnail"]["path"]
+    ext = i["thumbnail"]["extension"]
+    full_url = thumbnail_path + "/portrait_incredible." + ext
     comic = Comic(
       title=i["title"],
       description=i["description"],
+      thumbnail=full_url,
     )
     comic.save()
 

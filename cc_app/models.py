@@ -10,10 +10,10 @@ class CustomUser(AbstractUser):
 
 class Comic(models.Model):
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=1000, null=False)
-#   thumbnail = models.URLField()
+    description = models.TextField(null=True)
+    thumbnail = models.URLField(null=True)
 #   images = models.ImageField()
-#   price = models.DecimalField()
+    # price = models.DecimalField()
 
 # class FavoritesList(models.Model):
 #     comic = models.ManyToMany
