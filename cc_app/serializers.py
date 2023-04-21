@@ -2,6 +2,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import CustomUser
 from .models import Comic
+from .models import FavoritesList
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -27,4 +28,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class ComicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comic
+        fields = '__all__'
+
+
+class FavoritesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FavoritesList
         fields = '__all__'
