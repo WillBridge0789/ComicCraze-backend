@@ -1,21 +1,31 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import CustomUser
-from .models import Comic
-from .models import FavoritesList
-from .models import Wishlist
+from .models import *
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class ComicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comic
+        fields = '__all__'
+
+class UserReadSerializer(serializers.ModelSerializer):
+    favorite_comics = ComicSerializer(many=True)
+    
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'username', 'first_name', 'last_name', 'favorite_comics')
+
+class UserWriteSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True
     )
     username = serializers.CharField()
     password = serializers.CharField(min_length=8, write_only=True)
+    favorite_comics = serializers.PrimaryKeyRelatedField(queryset=Comic.objects.all(), many=True, required=False)
     
     class Meta:
         model = CustomUser
-        fields = ('email', 'username', 'password', 'first_name', 'last_name')
+        fields = ('email', 'username', 'password', 'first_name', 'last_name', 'favorite_comics')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -26,16 +36,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class ComicSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comic
-        fields = '__all__'
-
-
-class FavoritesListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FavoritesList
-        fields = '__all__'
 
 class WishlistSerializer(serializers.ModelSerializer):
     class Meta:

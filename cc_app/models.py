@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    favorites_list = models.ForeignKey('FavoritesList', on_delete=models.PROTECT, null=True)
+    favorite_comics = models.ManyToManyField('Comic', related_name="users")
     wishlist = models.ForeignKey('Wishlist', on_delete=models.PROTECT, null=True)
     items = models.ForeignKey('Items', on_delete=models.PROTECT, null=True)
 
@@ -15,10 +15,7 @@ class Comic(models.Model):
     description = models.TextField(null=True)
     thumbnail = models.URLField(null=True)
 #   images = models.ImageField()
-    # price = models.DecimalField()
-
-class FavoritesList(models.Model):
-    comic = models.ManyToManyField('Comic')
+#   price = models.DecimalField()
 
 class Items(models.Model):
     name = models.CharField(max_length=300)
