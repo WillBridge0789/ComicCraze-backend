@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import CustomUser
 from .models import Comic
 from .models import FavoritesList
+from .models import Wishlist
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -34,4 +35,9 @@ class ComicSerializer(serializers.ModelSerializer):
 class FavoritesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = FavoritesList
+        fields = '__all__'
+
+class WishlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wishlist
         fields = '__all__'

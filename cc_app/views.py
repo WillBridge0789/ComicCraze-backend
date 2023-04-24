@@ -9,6 +9,7 @@ from .models import Comic
 from .serializers import ComicSerializer
 from .serializers import CustomUserSerializer
 from .serializers import FavoritesListSerializer
+from .serializers import WishlistSerializer
 from django.http import JsonResponse
 import requests
 import datetime
@@ -40,7 +41,12 @@ class ComicViewSet(viewsets.ModelViewSet):
     serializer_class = ComicSerializer
 
 class FavoritesListViewSet(viewsets.ModelViewSet):
+    queryset = Comic.objects.all()
     serializer_class = FavoritesListSerializer
+
+class WishlistViewSet(viewsets.ModelViewSet):
+    queryset = Comic.objects.all()
+    serializer_class = WishlistSerializer
 
 
 

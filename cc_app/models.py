@@ -3,10 +3,9 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    # favorites_list = models.ForeignKey('FavoritesList', on_delete=models.PROTECT, null=True)
-    # wishlist = models.ForeignKey('Wishlist', on_delete=models.PROTECT, null=True)
-    # items = models.ForeignKey('Items', on_delete=models.PROTECT, null=True)
-    pass
+    favorites_list = models.ForeignKey('FavoritesList', on_delete=models.PROTECT, null=True)
+    wishlist = models.ForeignKey('Wishlist', on_delete=models.PROTECT, null=True)
+    items = models.ForeignKey('Items', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.username
@@ -21,10 +20,10 @@ class Comic(models.Model):
 class FavoritesList(models.Model):
     comic = models.ManyToManyField('Comic')
 
-# class Items(models.Model):
-#      name = models.CharField()
-#      is_gift = models.BooleanField()
-#      gift_message = models.CharField(max_length=500)
+class Items(models.Model):
+    name = models.CharField(max_length=300)
+    is_gift = models.BooleanField()
+    gift_message = models.CharField(max_length=500)
 
-# class Wishlist(models.Model):
-#      user_id = models.IntegerField()
+class Wishlist(models.Model):
+    user_id = models.IntegerField()
