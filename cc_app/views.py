@@ -1,16 +1,21 @@
-from django.shortcuts import render
+import requests
+import datetime
+import hashlib
+import environ
+
+from django.utils.decorators import method_decorator
+from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse
+
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status, permissions, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
+
 from .models import *
 from .serializers import *
-from django.http import JsonResponse
-import requests
-import datetime
-import hashlib
-import environ
 env = environ.Env()
 
 # Create your views here.
@@ -37,8 +42,12 @@ class UserDetail(generics.RetrieveUpdateAPIView):
             return UserWriteSerializer
         return UserReadSerializer
 
+class ItemsViewSet(viewsets.ModelViewSet):
+    queryset = Comic.objects.all()
+    serializer_class = ItemSerializer
+
 class ComicViewSet(viewsets.ModelViewSet):
-    queryset = Comic.objects.all()[:50]
+    queryset = Comic.objects.all()[:150]
     serializer_class = ComicSerializer
 
     def get_queryset(self):
@@ -52,11 +61,16 @@ class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Comic.objects.all()
     serializer_class = WishlistSerializer
 
+@method_decorator(csrf_exempt, name='dispatch')
+def delete_favorite(request, user_id, comic_id):
+    # fetch the object related to passed id
+    user = get_object_or_404(CustomUser, pk=user_id)
+    comic = get_object_or_404(Comic, pk=comic_id)
+ 
+    if request.method == "DELETE":
+        user.favorite_comics.remove(comic_id)
+        return HttpResponse(status=204)
 
-
-# def api_data_view(request):
-#     data = get_data_from_api()
-#     return JsonResponse(data)
 
 def get_comic(request):
   timestamp = datetime.datetime.now().strftime('%Y-%m-%d%H:%M:%S')
