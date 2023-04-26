@@ -8,10 +8,10 @@ class ComicSerializer(serializers.ModelSerializer):
         model = Comic
         fields = '__all__'
 
-class ItemSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Items
-        fields = ('id', 'name', 'is_gift', 'gift_message')
+        model = Order
+        fields = ('id', 'purchaser', 'items', 'is_gift', 'gift_message')
 
 class UserReadSerializer(serializers.ModelSerializer):
     favorite_comics = ComicSerializer(many=True)

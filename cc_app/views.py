@@ -42,12 +42,12 @@ class UserDetail(generics.RetrieveUpdateAPIView):
             return UserWriteSerializer
         return UserReadSerializer
 
-class ItemsViewSet(viewsets.ModelViewSet):
-    queryset = Comic.objects.all()
-    serializer_class = ItemSerializer
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 class ComicViewSet(viewsets.ModelViewSet):
-    queryset = Comic.objects.all()[:150]
+    queryset = Comic.objects.all()[:50]
     serializer_class = ComicSerializer
 
     def get_queryset(self):

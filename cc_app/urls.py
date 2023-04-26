@@ -6,6 +6,7 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register(r'comics', ComicViewSet)
+router.register(r'orders', OrderViewSet)
 
 
 urlpatterns = [
