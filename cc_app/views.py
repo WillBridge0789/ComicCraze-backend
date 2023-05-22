@@ -57,6 +57,14 @@ class ComicViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(title__icontains=q)
         return queryset
 
+    def get_queryset(self):
+        queryset = Comic.objects.all()
+        paginator = Paginator(queryset, 25)  # Show 25 contacts per page.
+
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        return render(request, "https://ainc-comic-craze.web.app/comics", {"page_obj": page_obj})
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Comic.objects.all()
     serializer_class = WishlistSerializer
